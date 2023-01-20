@@ -1,25 +1,14 @@
 // Variables - starting with defining today and formate
 var today = moment().format("[Today is - ] dddd, Do MMMM YYYY");
-// time now in 24 hour clock
-var timeNow = moment().format("kk:mm:ss a");
+var currentTime = moment().hours(16);
 // Define the working hours
 var dayStart = 9;
-// var dayStart = moment().hours(9).minutes(0).seconds(0);
-// var dayEnd = moment().hours(17).minutes(0).seconds(0);
-var currentHour = moment().hours(12);
-console.log(currentHour)
 var container = $('.container');
 // What the user types
 // var theEventInput = $("");
 
 // print date to page
 $("#currentDay").text(today);
-
-// console.log(timeNow);
-
-// for (var i = dayStart; i <= 17; i++) {
-//     console.log("Each hour " + i);
-// }
 
 // List the current working hours of the day in timeblock
 for (var i = dayStart; i <= 17; i++) {
@@ -29,22 +18,26 @@ for (var i = dayStart; i <= 17; i++) {
     var timeBlock = $('<div>').addClass('time-block col-12');
     var textArea = $('<textarea>').addClass('col-8');
 
-    // to check if past, present or future 
-    if (i < currentHour) {
-        textArea.addClass('past');
-    } else if ( i == currentHour) {
-        textArea.addClass('present')
-    } else {
-        textArea.addClass('future')
-    }
     var saveBtn = $('<button><i class="fas fa-save"></i>').addClass('saveBtn col-2');
 
     // chain methods together and print in hour class
-    var hourFormat = moment().hours(i).minutes(0).seconds(0).format("h:mm a");
+    var hourFormat = moment().hours(i).minutes(0).seconds(0).format("kk:mm a");
     theHour.text(hourFormat);
     textArea.attr("id", hourFormat);
     // textarea.attr("id", i+":00");
-    
+
+    // to check if past, present or future 
+    var thisHour = moment().hours(i);
+
+    // need to add the hours method to compare as different data types on their own - returning false
+    if (thisHour.hours() < currentTime.hours()) {
+        textArea.addClass('past');
+    } else if (thisHour.hours() === currentTime.hours()) {
+        textArea.addClass('present')
+    } else if (thisHour.hours() > currentTime.hours()) {
+        textArea.addClass('future')
+    }
+
     theRow.append(
         timeBlock,
         theHour,
@@ -54,8 +47,8 @@ for (var i = dayStart; i <= 17; i++) {
     textArea.append(timeBlock);
 
     theRow.appendTo(container);
-  }
+}
 
-  
+
 
 // event listener for saveBtn
