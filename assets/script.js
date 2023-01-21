@@ -1,5 +1,7 @@
+// To test other dates, change to today variable below
+// var today = moment("22/01/23", "DD/MM/YY").format("[Today is - ] dddd, Do MMMM YYYY");
 // Variables - starting with defining today and format
-var today = moment().format("[Today is - ] dddd, Do MMMM YYYY");
+var today = moment().format('[Today is - ] dddd, Do MMMM YYYY');
 var currentTime = moment();
 // Define the working hour start
 var dayStart = 9;
@@ -7,6 +9,14 @@ var container = $('.container');
 
 // print date to page
 $("#currentDay").text(today);
+
+// clears the page for a new stored date
+var storedDate = localStorage.getItem('storedDate');
+if (storedDate !== today) {
+  localStorage.clear();
+  localStorage.setItem('storedDate', today);
+}
+
 
 // List the current working hours of the day in timeblock
 for (var i = dayStart; i <= 17; i++) {
@@ -58,7 +68,7 @@ $('.saveBtn').on('click', function(event){
     event.preventDefault();
     // get the description from the sibling button that is clicked
     var description = $(this).siblings('.description').val();
-    // assign the id from the sibling to the variable
+    // assign the id from the sibling to the variable - remove hour string from id
     var id = $(this).siblings('.description').attr('id').split('-')[1]; 
     localStorage.setItem(id, description);
 });
