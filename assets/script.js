@@ -1,11 +1,9 @@
-// Variables - starting with defining today and formate
+// Variables - starting with defining today and format
 var today = moment().format("[Today is - ] dddd, Do MMMM YYYY");
 var currentTime = moment();
-// Define the working hours
+// Define the working hour start
 var dayStart = 9;
 var container = $('.container');
-// What the user types
-// var theEventInput = $("");
 
 // print date to page
 $("#currentDay").text(today);
@@ -22,16 +20,20 @@ for (var i = dayStart; i <= 17; i++) {
 
     // chain methods together and print in hour
     var hourFormat = moment().hours(i).minutes(0).seconds(0).format('kk:mm a');
-    var textAreaId = moment().hours(i).format('kk');
+    var textAreaId = i;
     theHour.text(hourFormat);
     //add id to the textarea, prefix hour string and add the hour in 24hr format
     textArea.attr('id', 'hour-'+ textAreaId);
-    // textarea.attr("id", i+":00");
+    // retrieve data from localstorage
+    var storedValue = localStorage.getItem(textAreaId);
+    if(storedValue){
+    textArea.val(storedValue);
+    }
 
     // to check if past, present or future 
     var thisHour = moment().hours(i);
 
-    // need to add the hours method to compare as different data types on their own - returning false
+    // use hours method to check time to change bg colour
     if (thisHour.hours() < currentTime.hours()) {
         textArea.addClass('past');
     } else if (thisHour.hours() === currentTime.hours()) {
@@ -51,18 +53,15 @@ for (var i = dayStart; i <= 17; i++) {
     theRow.appendTo(container);
 }
 
-
 // event listener for saveBtn
 $('.saveBtn').on('click', function(event){
     event.preventDefault();
     // get the description from the sibling button that is clicked
     var description = $(this).siblings('.description').val();
-    // assign the id from the sibling to the vaariable
-    var id = $(this).siblings('.description').attr('id');
-    // test output
-    console.log(id, description);
-    // pass both keys to local storage
+    // assign the id from the sibling to the variable
+    var id = $(this).siblings('.description').attr('id').split('-')[1]; 
     localStorage.setItem(id, description);
 });
+
 
 
