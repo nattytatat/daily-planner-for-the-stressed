@@ -1,6 +1,6 @@
 // Variables - starting with defining today and formate
 var today = moment().format("[Today is - ] dddd, Do MMMM YYYY");
-var currentTime = moment().hours(16);
+var currentTime = moment();
 // Define the working hours
 var dayStart = 9;
 var container = $('.container');
@@ -16,14 +16,16 @@ for (var i = dayStart; i <= 17; i++) {
     var theRow = $('<div>').addClass('row');
     var theHour = $('<div>').addClass('hour col-2');
     var timeBlock = $('<div>').addClass('time-block col-12');
-    var textArea = $('<textarea>').addClass('col-8');
+    var textArea = $('<textarea>').addClass('description col-8');
 
     var saveBtn = $('<button><i class="fas fa-save"></i>').addClass('saveBtn col-2');
 
-    // chain methods together and print in hour class
-    var hourFormat = moment().hours(i).minutes(0).seconds(0).format("kk:mm a");
+    // chain methods together and print in hour
+    var hourFormat = moment().hours(i).minutes(0).seconds(0).format('kk:mm a');
+    var textAreaId = moment().hours(i).format('kk');
     theHour.text(hourFormat);
-    textArea.attr("id", hourFormat);
+    //add id to the textarea, prefix hour string and add the hour in 24hr format
+    textArea.attr('id', 'hour-'+ textAreaId);
     // textarea.attr("id", i+":00");
 
     // to check if past, present or future 
@@ -50,5 +52,17 @@ for (var i = dayStart; i <= 17; i++) {
 }
 
 
-
 // event listener for saveBtn
+$('.saveBtn').on('click', function(event){
+    event.preventDefault();
+    // get the description from the sibling button that is clicked
+    var description = $(this).siblings('.description').val();
+    // assign the id from the sibling to the vaariable
+    var id = $(this).siblings('.description').attr('id');
+    // test output
+    console.log(id, description);
+    // pass both keys to local storage
+    localStorage.setItem(id, description);
+});
+
+
