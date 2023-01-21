@@ -1,4 +1,4 @@
-// To test other dates, change to today variable below
+// To test other dates, change the date in today variable below
 // var today = moment("22/01/23", "DD/MM/YY").format("[Today is - ] dddd, Do MMMM YYYY");
 // Variables - starting with defining today and format
 var today = moment().format('[Today is - ] dddd, Do MMMM YYYY');
@@ -22,7 +22,7 @@ if (storedDate !== today) {
 for (var i = dayStart; i <= 17; i++) {
     // dynamically create HTML elements for each hour
     var theRow = $('<div>').addClass('row');
-    var theHour = $('<div>').addClass('hour col-2');
+    var theHour = $('<div>').addClass('hour d-flex justify-content-center align-items-center col-2');
     var timeBlock = $('<div>').addClass('time-block col-12');
     var textArea = $('<textarea>').addClass('description col-8');
 
@@ -70,8 +70,24 @@ $('.saveBtn').on('click', function(event){
     var description = $(this).siblings('.description').val();
     // assign the id from the sibling to the variable - remove hour string from id
     var id = $(this).siblings('.description').attr('id').split('-')[1]; 
-    localStorage.setItem(id, description);
+    // if description is not empty- set items to local storage
+    if (description == "") {
+        alert('You need to enter an event!')
+        return;
+    } else if (description !== "") {
+        localStorage.setItem(id,description)
+        var display = $('<p>').addClass('text-center');
+        display.text('Event added to local storage');
+        display.prependTo(container);
+
+        setTimeout(() => {
+            display.remove();
+          }, 5000);
+
+    }
 });
+
+
 
 
 

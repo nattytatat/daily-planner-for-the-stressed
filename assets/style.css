@@ -15,10 +15,11 @@ textarea {
 
 .jumbotron {
   text-align: center;
-  background-color: transparent;
+  background-color: #f1f1f1;
   color: black;
-  border-radius: 0;
+  border-radius: 10px;
   border-bottom: 10px solid black;
+  margin: 10px;
 }
 
 #currentDay {
@@ -60,7 +61,7 @@ textarea {
 }
 
 .saveBtn {
-  border-left: 1px solid black;
+  border: 2px solid transparent;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
   background-color: #06aed5;
