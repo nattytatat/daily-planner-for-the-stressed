@@ -14,7 +14,7 @@
 
 - Upon page reload the data remains on the page. Only a new date clears the current data from the browser.
 
-![example password generated screenshot](./assets/images/start-the-quiz.png)
+![example planner screenshot](./assets/feeling-stressed-no-more.jpg)
 
 ## Installation
 
